@@ -33,7 +33,7 @@ First, make sure you have the latest version of [Node](https://nodejs.org/en) in
 
 Clone this repository into any directory:
 ```
-git clone https://github.com/HipHyena/FriendsBot.git
+git clone https://github.com/hip-hyena/FriendsBot.git
 ```
 (or, if you don't use Git, just download this repo as a ZIP file and unpack it in any directory)
 
