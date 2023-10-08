@@ -1,0 +1,4 @@
+node_modules
+dumps
+.env
+db.sqlite3

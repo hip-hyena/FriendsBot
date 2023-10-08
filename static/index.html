@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+  <!--script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.17/web.js"></script-->
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+  <link href="css/main.css?1" rel="stylesheet" media="screen">
+<body>
+  <div id="app">
+    <div id="map"></div>
+    <div class="search-control">
+      <input id="search" type="text" placeholder="Search Cities..." oninput="onSearchInput()"/>
+      <div id="search-results" class="is-hidden"></div>
+    </div>
+  </div>
+  <div id="notification" class="is-hidden"></div>
+  <script src="js/app.js?3"></script>
+</body>
+</html>

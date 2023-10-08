@@ -1,0 +1,349 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  font: 14px/20px Roboto, -apple-system, BlinkMacSystemFont, "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
+  color: #222;
+  color: var(--tg-theme-text-color);
+  
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  overflow: hidden;
+
+  background: #fff;
+  background: var(--tg-theme-bg-color);
+}
+
+#app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#map {
+  flex: 1;
+  color: #fff;
+}
+
+.user-cluster {
+  min-width: 34px;
+  height: 34px;
+  background-color: var(--tg-theme-button-color);
+  border-radius: 17px;
+  line-height: 34px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0px 7px;
+}
+.user-marker {
+  width: 0px;
+  height: 0px;
+  z-index: calc(1000 - var(--depth));
+}
+.user-marker.is-selected {
+  z-index: 2000;
+}
+.user-marker__content {
+  position: absolute;
+  left: 0px;
+  bottom: 3px;
+  background-color: var(--background-color);
+  border-radius: 3px;
+  border-bottom-left-radius: 0px;
+  padding: 2px 5px;
+  transform: translate(0px, calc(-16px * var(--depth)));
+  box-shadow: 1px -1px 1px #00000012;
+  cursor: pointer;
+  transition: opacity 0.5s;
+}
+.user-marker__icon {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  box-shadow: 1px 1px 1px #00000012;
+  background-color: var(--background-color);
+  border-radius: 50%;
+  line-height: 24px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  transform: translate(0px, calc(-16px * var(--depth)));
+}
+.is-compact .user-marker__content {
+  opacity: 0;
+}
+.is-compact .user-marker__icon {
+  opacity: 1;
+}
+.user-marker__name {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.user-marker__location {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  line-height: 12px;
+  white-space: nowrap;
+}
+.user-marker__location img {
+  height: 10px;
+  margin-right: 4px;
+}
+.user-marker__buttons {
+  display: none;
+  position: absolute;
+  top: 100%;
+  margin-top: 2px;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  border-radius: 4px;
+  padding: 3px;
+  gap: 3px;
+  min-width: fit-content;
+  max-width: 120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.user-marker__buttons span {
+  text-align: center;
+  opacity: 0.85;
+  color: #fff;
+  line-height: 14px;
+  text-shadow: 0px 1px 0px #000000;
+}
+.user-marker__buttons:before {
+  content: "";
+  left: 50%;
+  margin-left: -3px;
+  top: -6px;
+  width: 0px;
+  height: 0px;
+  border: 3px solid transparent;
+  position: absolute;
+  border-bottom: 3px solid rgba(0,0,0,0.7);
+}
+.user-marker__buttons button {
+  font: 14px/20px Roboto, -apple-system, BlinkMacSystemFont, "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
+  display: block;
+  padding: 5px 0px;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  background: rgb(109 109 109 / 80%);
+  min-width: 90px;
+  cursor: pointer;
+}
+.user-marker__buttons button:hover {
+  background: rgba(140, 140, 140, 0.8);
+}
+.user-marker.is-selected .user-marker__buttons {
+  display: flex;
+  flex-direction: column;
+}
+.user-marker:before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 0px;
+  height: 0px;
+  border-top: 3px solid var(--background-color);
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 3px solid var(--background-color);
+}
+.user-marker.is-stacked:before {
+  display: none;
+}
+.user-marker.is-stacked .user-marker__content {
+  left: 2px;
+  height: 16px;
+  margin-bottom: 14px;
+  border-bottom-right-radius: 0px;
+}
+.user-marker.is-stacked .user-marker__location {
+  visibility: hidden;
+  margin-right: -4px;
+}
+.user-marker__edit-btn {
+  display: block;
+}
+.user-marker.is-draggable .user-marker__edit-btn {
+  display: none;
+}
+.user-marker.is-draggable {
+  z-index: 3000;
+}
+
+.toolbar {
+  display: none;
+  padding: 6px;
+  gap: 6px;
+}
+
+#city {
+  flex: 1;
+  font: 14px/20px Roboto, -apple-system, BlinkMacSystemFont, "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
+  color: #222;
+  color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-secondary-bg-color);
+  padding: 6px 8px;
+  border: 2px solid #0096ee;
+  border-color: var(--tg-theme-button-color);
+  border-radius: 5px;
+  outline: none !important;
+}
+
+#city.is-hidden {
+  display: none;
+}
+
+select {
+  display: block;
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+
+  font: 14px/20px Roboto, -apple-system, BlinkMacSystemFont, "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
+  color: #222;
+  color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-secondary-bg-color);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwMCAxMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KICA8cGF0aCBmaWxsPSJncmF5IiBkPSJNMTAsMjMyLjdsNDkwLDUzNC41bDQ5MC01MzQuNUgxMHoiIC8+DQo8L3N2Zz4=);
+  background-repeat: no-repeat;
+  background-position: calc(100% - 7px);
+  background-size: 12px;
+  padding: 6px 8px;
+  border: 2px solid #0096ee;
+  border-color: var(--tg-theme-button-color);
+  border-radius: 5px;
+  outline: none !important;
+}
+
+#notification {
+  border-radius: 5px;
+  background: rgba(0,0,0,0.8);
+  padding: 8px 12px;
+  color: #fff;
+  position: fixed;
+  top: 50px;
+  left: 8px;
+  right: 49px;
+  line-height: 18px;
+  transition: transform 0.5s, opacity 0.5s;
+}
+#notification.is-with-arrow:before {
+  content: "";
+  left: 50%;
+  margin-left: -6px;
+  top: -12px;
+  width: 0px;
+  height: 0px;
+  border: 6px solid transparent;
+  position: absolute;
+  border-bottom: 6px solid rgba(0,0,0,0.8);
+}
+#notification.is-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+p {
+  margin: 0px 0px 8px 0px;
+}
+p:last-child {
+  margin-bottom: 0px;
+}
+
+
+.search-control {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: calc(100vw - 61px);
+  color: #222;
+  background: #fff;
+  z-index: 5000;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#search {
+  font: 14px/20px Roboto, -apple-system, BlinkMacSystemFont, "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif;
+  padding: 5px 8px 5px 30px;
+  background-image: url(data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2018%2018%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D%22%23999%22%20d%3D%22M7.4%202.5c-2.7%200-4.9%202.2-4.9%204.9s2.2%204.9%204.9%204.9c1%200%201.8-.2%202.5-.8l3.7%203.7c.2.2.4.3.8.3.7%200%201.1-.4%201.1-1.1%200-.3-.1-.5-.3-.8L11.4%2010c.4-.8.8-1.6.8-2.5.1-2.8-2.1-5-4.8-5zm0%201.6c1.8%200%203.2%201.4%203.2%203.2s-1.4%203.2-3.2%203.2-3.3-1.3-3.3-3.1%201.4-3.3%203.3-3.3z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 5px center;
+  border: none;
+  outline: none !important;
+}
+.city {
+  padding: 3px 8px;
+  cursor: pointer;
+}
+.city:hover {
+  background: #eee;
+}
+.city__region {
+  color: #888;
+}
+.city__region img {
+  margin-right: 3px;
+  position: relative;
+  top: 1px;
+}
+.city__name {
+  font-weight: bold;
+}
+
+#search-results {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #ddd;
+}
+#search-results.is-hidden {
+  display: none;
+}
+
+.mapboxgl-ctrl-bottom-right, .mapboxgl-ctrl-top-left, .mapboxgl-ctrl-top-right {
+  z-index: 5000;
+}
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl {
+  width: calc(100vw - 61px) !important;
+}
+[class$="--Results"] { /* bad hack */
+  max-height: 300px;
+}
+[class$="--Input"]:focus {
+  border: solid 1px !important;
+  border-color: var(--tg-theme-button-color) !important;
+}
