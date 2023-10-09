@@ -73,3 +73,12 @@ pm2 save
 ```
 
 If you're using `Nginx`, don't forget to make sure you've configured it to correctly proxy requests from `<PUBLIC_URL>` to `localhost:<INTERNAL_PORT>`. You also may need to configure [Certbot](https://certbot.eff.org/) to acquire HTTPS certificates (you can follow [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04) for details).
+
+## Rebuilding Geonames database
+
+This project uses data from [Geonames](http://www.geonames.org/) to provide localised city search. This data is stored in `geonames.sqlite3` database and already included in this repository. You may, however, want to rebuild it at later time. To do that:
+
+1. Delete `geonames.sqlite3`
+2. Run `node import-geonames.js`
+
+This will create directory called `dumps` for temporary storage of Geonames dumps (about 170 MB). You can delete that directory after the process finishes (it should only take a couple of minutes).
