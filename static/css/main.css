@@ -347,3 +347,27 @@ p:last-child {
   border: solid 1px !important;
   border-color: var(--tg-theme-button-color) !important;
 }
+
+/* Telegram for Android requires this hack to disable swipe gestures over canvas */
+
+#scroll-hack {
+  display: none;
+}
+
+.is-scroll-hack-enabled body {
+  overflow: auto;
+}
+
+.is-scroll-hack-enabled #app {
+  position: fixed;
+  height: 100vh;
+}
+
+.is-scroll-hack-enabled #scroll-hack {
+  position: relative;
+  display: block;
+  width: 5000px;
+  height: 5000px;
+  opacity: 0.2;
+  pointer-events: none;
+}

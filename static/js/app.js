@@ -536,6 +536,7 @@ async function onSearchInput() {
 }
 
 mapboxgl.accessToken = MAPBOX_TOKEN;
+const ENABLE_ANDROID_SCROLL_HACK = Telegram.WebApp.platform == 'android';
 const me = Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user || {};
 const users = {};
 const markers = {};
@@ -686,3 +687,14 @@ map.on('idle', () => {
 });
 init();
 loadCities();
+
+if (Telegram.WebApp.platform == 'android') {
+  // This is to ease the pain of broken vertical swipes
+  Telegram.WebApp.expand();
+}
+if (ENABLE_ANDROID_SCROLL_HACK) {
+  document.body.classList.add('is-scroll-hack-enabled');
+  setInterval(() => {
+    scrollTo(2500, 2500);
+  }, 200);
+}
