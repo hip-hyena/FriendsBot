@@ -4,6 +4,10 @@ This is a sample bot for Telegram, made as an entry for [Telegram 2023 Mini App 
 
 You can engage directly with the functioning bot [@FriendsBot](https://t.me/FriendsBot), or clone and modify this repository to fit your personal needs (see the [Deployment](#Deployment) section). This option can be particularly appealing to privacy-conscious individuals who desire full control over their data storage and usage. Given the bot's access to sensitive information such as user locations, this ensures adherence to strict privacy measures.
 
+## Known issues
+
+Unfortunately, Telegram does not provide (yet) a reliable way to prevent vertical swipe gestures from "leaking" to the Telegram client. This means that some touch gestures can be interpreted incorrectly and lead to expanding/closing Mini App instead of interacting with its elements. This is especially noticable on Android devices.
+
 ## Usage
 
 This bot is designed to fulfill a simple objective — it helps you track your friends' whereabouts globally at a city level. No more, no less.
